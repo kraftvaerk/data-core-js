@@ -8,7 +8,7 @@ class Endpoint {
         this.args = Object.assign({}, ...args);
     };
 
-    get options(...additionalArgs) {
+    options(...additionalArgs) {
         return Object.assign({
             method: this.method, 
             url: this.url, 

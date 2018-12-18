@@ -1,0 +1,31 @@
+{
+  "name": "@kraftvaerk/data-core",
+  "version": "0.1.0",
+  "description": "endpoint fetch request http ajax",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel src --out-file dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kraftvaerk/data-core-js.git"
+  },
+  "author": {
+    "name": "Kraftvaerk",
+    "url": "http://www.kraftvaerk.com/"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kraftvaerk/data-core-js/issues"
+  },
+  "homepage": "https://github.com/kraftvaerk/data-core-js#readme",
+  "devDependencies": {
+    "@babel/cli": "latest",
+    "@babel/core": "latest",
+    "@babel/plugin-proposal-object-rest-spread": "latest",
+    "@babel/plugin-syntax-dynamic-import": "latest",
+    "@babel/plugin-transform-modules-commonjs": "latest",
+    "@babel/preset-env": "latest"
+  }
+}
