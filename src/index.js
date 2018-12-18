@@ -1,6 +1,6 @@
-import Endpoint from '../core/endpoint.core';
-import loader from '../core/loader.core';
-import api from '../api/global.api';
+import Endpoint from './core/endpoint.core';
+import loader from './core/loader.core';
+import api from './api/global.api';
 
 
 

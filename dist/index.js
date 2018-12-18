@@ -586,11 +586,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _endpoint = _interopRequireDefault(require("../core/endpoint.core"));
+var _endpoint = _interopRequireDefault(require("./core/endpoint.core"));
 
-var _loader = _interopRequireDefault(require("../core/loader.core"));
+var _loader = _interopRequireDefault(require("./core/loader.core"));
 
-var _global = _interopRequireDefault(require("../api/global.api"));
+var _global = _interopRequireDefault(require("./api/global.api"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
