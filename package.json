@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "sample": "parcel samples/index.html --https",
-    "build": "babel src/** --out-file dist/index.js && npm run sample",
+    "build": "parcel build src/index.js --out-dir dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,12 +22,6 @@
   },
   "homepage": "https://github.com/kraftvaerk/data-core-js#readme",
   "devDependencies": {
-    "@babel/cli": "latest",
-    "@babel/core": "latest",
-    "@babel/plugin-proposal-object-rest-spread": "latest",
-    "@babel/plugin-syntax-dynamic-import": "latest",
-    "@babel/plugin-transform-modules-commonjs": "latest",
-    "@babel/preset-env": "latest",
     "parcel-bundler": "^1.11.0"
   }
 }

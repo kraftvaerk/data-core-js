@@ -27,12 +27,10 @@ const loader = {
         if (query.length > 0) query = '?' + query.slice(1);
 
         // generate options and headers (extend if neccessary)
-        console.log(options.args.headers);
         const headers = appendHeaders(
             new Headers({ 'Accept': _mime.json, 'Content-Type': _mime.json }), 
-            options.args.headers
+            options.headers
         );
-        console.log(headers);
         const fetchOptions = Object.assign({
             method: 'GET',
             credentials: 'include',
@@ -51,7 +49,7 @@ const loader = {
         // generate headers (extend if neccessary)
         const headers = appendHeaders(
             new Headers({ 'Accept': _mime.json, 'Content-Type': _mime.json }), 
-            options.args.headers
+            options.headers
         );
 
         // request options
@@ -71,7 +69,7 @@ const loader = {
         // generate headers (extend if neccessary)
         const headers = appendHeaders(
             new Headers({ 'Accept': _mime.json, 'Content-Type': _mime.json }),
-            options.args.headers
+            options.headers
         );
 
         // request options

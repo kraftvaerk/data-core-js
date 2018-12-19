@@ -104,507 +104,510 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({"../src/core/endpoint.core.js":[function(require,module,exports) {
-"use strict";
+})({"../dist/index.js":[function(require,module,exports) {
+var define;
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+parcelRequire = function (e, r, n, t) {
+  var i = "function" == typeof parcelRequire && parcelRequire,
+      o = "function" == typeof require && require;
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-// endpoint options class
-var Endpoint =
-/*#__PURE__*/
-function () {
-  function Endpoint() {
-    var method = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'GET';
-    var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '#';
-    var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-    _classCallCheck(this, Endpoint);
-
-    this.method = method;
-    this.url = url;
-    this.data = data;
-
-    for (var _len = arguments.length, args = new Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
-      args[_key - 3] = arguments[_key];
-    }
-
-    this.args = Object.assign.apply(Object, [{}].concat(args));
-  }
-
-  _createClass(Endpoint, [{
-    key: "options",
-    value: function options() {
-      for (var _len2 = arguments.length, additionalArgs = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        additionalArgs[_key2] = arguments[_key2];
+  function u(n, t) {
+    if (!r[n]) {
+      if (!e[n]) {
+        var f = "function" == typeof parcelRequire && parcelRequire;
+        if (!t && f) return f(n, !0);
+        if (i) return i(n, !0);
+        if (o && "string" == typeof n) return o(n);
+        var c = new Error("Cannot find module '" + n + "'");
+        throw c.code = "MODULE_NOT_FOUND", c;
       }
 
-      return Object.assign.apply(Object, [{
-        method: this.method,
-        url: this.url,
-        data: this.data
-      }, this.args].concat(additionalArgs));
+      p.resolve = function (r) {
+        return e[n][1][r] || r;
+      }, p.cache = {};
+      var l = r[n] = new u.Module(n);
+      e[n][0].call(l.exports, p, l, l.exports, this);
     }
-  }]);
 
-  return Endpoint;
-}();
+    return r[n].exports;
 
-;
-var _default = Endpoint;
-exports.default = _default;
-},{}],"../src/core/mime-type.core.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var mime = {
-  css: 'text/css',
-  html: 'text/html',
-  script: 'text/javascript',
-  json: 'application/json',
-  xml: 'application/xml',
-  xhtml: 'application/xhtml+xml',
-  stream: 'application/octet-stream'
-};
-var _default = mime;
-exports.default = _default;
-},{}],"../src/core/sanitize.core.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _mimeType = _interopRequireDefault(require("./mime-type.core"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var sanitize = {
-  core: function core(response) {
-    var contentType = response.headers ? response.headers.get('content-type') : '';
-    if (contentType.includes(_mimeType.default.json)) return response.json();
-    if (contentType.includes(_mimeType.default.html)) return response.text();
-    if (contentType.includes(_mimeType.default.stream)) return response.blob();
-    throw new TypeError('content-type not available');
-  },
-  json: function json(response) {
-    var contentType = response.headers ? response.headers.get('content-type') : '';
-    if (contentType.includes(_mimeType.default.json)) return response.json();
-    throw new TypeError('content-type not available');
-  },
-  html: function html(response) {
-    var contentType = response.headers ? response.headers.get('content-type') : '';
-    if (contentType.includes(_mimeType.default.json)) return response.text();
-    throw new TypeError('content-type not available');
-  },
-  stream: function stream(response) {
-    var contentType = response.headers ? response.headers.get('content-type') : '';
-    if (contentType.includes(_mimeType.default.json)) return response.blob();
-    throw new TypeError('content-type not available');
-  }
-};
-var _default = sanitize;
-exports.default = _default;
-},{"./mime-type.core":"../src/core/mime-type.core.js"}],"../src/core/exception.core.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-// invalid response error
-var InvalidResponseError = function InvalidResponseError() {
-  var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  var exc = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  this.name = 'InvalidResponseError';
-  this.message = message;
-  this.exc = exc;
-};
-
-InvalidResponseError.prototype = new Error();
-var _default = {
-  InvalidResponseError: InvalidResponseError
-};
-exports.default = _default;
-},{}],"../src/common/utility.common.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.replaceStringParams = exports.replaceObjectParams = exports.replacePlaceholderParams = exports.clone = exports.parseJSON = exports.stringify = void 0;
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-// convert an object to a json string
-var stringify = function stringify(object) {
-  return JSON.stringify(object);
-}; // parse a json string to a js object
-
-
-exports.stringify = stringify;
-
-var parseJSON = function parseJSON(object) {
-  return JSON.parse(object);
-}; // does a deep clone of an object (functions not allowed)
-
-
-exports.parseJSON = parseJSON;
-
-var clone = function clone(object) {
-  return parseJSON(stringify(object));
-}; // replace placeholder parameters inside a string with provided values
-// i.e. ('You are {0} years old {1}', [32], null, true ) => returns the resulting string with values replaced using the values array
-// @placholder: string => "You are {0} years old"
-// @values:     object/array => 26 or [26]
-// @regex:      regex => defaults to digits {0}, {1}... {n} */
-// @limit:      boolean => trim result to length of values
-
-
-exports.clone = clone;
-
-var replacePlaceholderParams = function replacePlaceholderParams(placeholder, values, limit) {
-  if (!placeholder) return '';
-  if (typeof placeholder !== 'string') throw new TypeError('invalid placeholder or placeholder is not an string', placeholder);
-  if (regex && !(regex instanceof RegExp)) throw new TypeError('invalid regex: the regex is not a properly formatted regular expression i.e. /{\\d}/g ', regex);
-  values = values instanceof Array ? values : [values];
-  var regex = /{\d}|{\d,\d}|{\d,\d-\d}/g; // trim the placeholder to size base on the array of values length
-
-  var index = -1;
-  var count = values.length;
-  var tag = "{".concat(count - 1, "}"); // placeholder tags start at index 0
-
-  var nextTag = "{".concat(count, "}"); // detect if next tag exists
-
-  var tagExistsInPlaceholder = placeholder.indexOf(tag) > -1;
-  var nextTagExistsInPlaceholder = placeholder.indexOf(nextTag) > -1;
-  var trimToIndex = placeholder.indexOf(tag) + tag.length;
-  placeholder = limit ? placeholder.substring(0, tagExistsInPlaceholder && nextTagExistsInPlaceholder ? trimToIndex : placeholder.length) : placeholder; // insert values in placeholder tags
-
-  var result = placeholder.replace(regex, function (match) {
-    // introducing index based string manipulation (from-to index)
-    var substring = match.substring(1, match.length - 1).split(','); // [..., x-y]
-
-    var substringStartIndex = substring.length === 1 ? 0 : substring[1].split('-')[0]; // check substring values
-
-    var substringLength = substring.length === 1 ? undefined : substring[1].split('-')[1]; // declare substring length
-
-    var manipulated = ++index < count ? values[index] !== undefined ? values[index].toString().substring(substringStartIndex, substringLength) : null : match;
-    return manipulated;
-  });
-  return result;
-}; // replace placeholder parameters inside an object with provided values
-// i.e. ( { a: '{0}', b: { c: {1} }}, ['value-a', 'value-c'] ) => returns an object with values replaced using the values array
-// @model:      object => defaults to {}
-// @values:     object/array => 26 or [26]
-// @regex:      regex => defaults to digits {0}, {1}... {n} */
-
-
-exports.replacePlaceholderParams = replacePlaceholderParams;
-
-var replaceObjectParams = function replaceObjectParams(model, values) {
-  if (!model) return {};
-  if (_typeof(model) !== 'object' && model.constructor === Object) throw new TypeError("invalid model or model is not an object", model);
-  values = values instanceof Array ? values : [values];
-  var regexJSONPlaceholder = /"{\d}"/g;
-  var regexPlaceholderIndex = /{(.*?)}/;
-  var stringified = stringify(model);
-  var result = stringified.replace(regexJSONPlaceholder, function (match) {
-    var placeholderIndex = match.match(regexPlaceholderIndex);
-    var index = placeholderIndex.length > 0 ? placeholderIndex[1] : -1;
-    return index > -1 && index < values.length ? stringify(values[index]) : match;
-  });
-  return parseJSON(result);
-}; // replaces placeholder values sing the object properties; object must be a of single depth
-// i.e. (/api/{userID}/get/email, { userID: 123 } => returns userID placeholder replaced with the object.userID value
-// @string:     string => string with placeholder params {n}
-// @object:     object => flat object with properties matching the placeholder params
-
-
-exports.replaceObjectParams = replaceObjectParams;
-
-var replaceStringParams = function replaceStringParams()
-/* flat object */
-{
-  var string = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  var object = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var regex = /{(.*?)}/g;
-  var result = string.replace(regex, function (match) {
-    return object[match.substring(1, match.length - 1)];
-  });
-  return result;
-}; // export defaults
-
-
-exports.replaceStringParams = replaceStringParams;
-var _default = {
-  stringify: stringify,
-  parseJSON: parseJSON,
-  clone: clone,
-  replacePlaceholderParams: replacePlaceholderParams,
-  replaceObjectParams: replaceObjectParams,
-  replaceStringParams: replaceStringParams
-};
-exports.default = _default;
-},{}],"../src/core/loader.core.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _mimeType = _interopRequireDefault(require("./mime-type.core"));
-
-var _sanitize2 = _interopRequireDefault(require("./sanitize.core"));
-
-var _exception2 = _interopRequireDefault(require("./exception.core"));
-
-var _utility = require("../common/utility.common");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-// available fetch request types
-var requestTypes = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'TRACE', 'OPTIONS', 'CONNECT', 'PATCH']; // append headers to header instance
-
-var appendHeaders = function appendHeaders(header)
-/* array containing header objects */
-{
-  var headers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-  header = header || new Headers();
-  if (!headers.length) return header;
-
-  for (var i = 0, length = headers.length; i < length; i++) {
-    header.append(Object.keys(headers[i])[0], Object.values(headers[i])[0]);
+    function p(e) {
+      return u(p.resolve(e));
+    }
   }
 
-  return header;
-}; // loader core (get, post, do)
+  u.isParcelRequire = !0, u.Module = function (e) {
+    this.id = e, this.bundle = u, this.exports = {};
+  }, u.modules = e, u.cache = r, u.parent = i, u.register = function (r, n) {
+    e[r] = [function (e, r) {
+      r.exports = n;
+    }, {}];
+  };
 
+  for (var f = 0; f < n.length; f++) {
+    u(n[f]);
+  }
 
-var loader = {
-  get: function get(options
-  /* { method = '', url = '', data = {}, headers = [], ...args } */
-  ) {
-    if (!options.url) throw new TypeError('loader.get => options.url is invalid, null or undefined');
-    var query = '';
-    if (options.data && _typeof(options.data) === 'object') for (var prop in options.data) {
-      query += '&' + prop + '=' + encodeURIComponent(options.data[prop]);
+  if (n.length) {
+    var c = u(n[n.length - 1]);
+    "object" == (typeof exports === "undefined" ? "undefined" : _typeof(exports)) && "undefined" != typeof module ? module.exports = c : "function" == typeof define && define.amd ? define(function () {
+      return c;
+    }) : t && (this[t] = c);
+  }
+
+  return u;
+}({
+  "0pG5": [function (require, module, exports) {
+    "use strict";
+
+    function e(e, t) {
+      if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function");
     }
-    if (query.length > 0) query = '?' + query.slice(1); // generate options and headers (extend if neccessary)
 
-    console.log(options.args.headers);
-    var headers = appendHeaders(new Headers({
-      'Accept': _mimeType.default.json,
-      'Content-Type': _mimeType.default.json
-    }), options.args.headers);
-    console.log(headers);
-    var fetchOptions = Object.assign({
-      method: 'GET',
-      credentials: 'include',
-      headers: headers
-    }, options.args);
-    return fetch(options.url + query, fetchOptions);
-  },
-  head: function head(options
-  /* {} */
-  ) {
-    throw new Error('loader.head => not yet implemented...');
-  },
-  post: function post(options
-  /* { method = '', url = '', data = {}, headers = [], ...args } */
-  ) {
-    if (!options.url) throw new TypeError('loader.post => options.url is invalid, null or undefined'); // generate headers (extend if neccessary)
+    function t(e, t) {
+      for (var r = 0; r < t.length; r++) {
+        var n = t[r];
+        n.enumerable = n.enumerable || !1, n.configurable = !0, "value" in n && (n.writable = !0), Object.defineProperty(e, n.key, n);
+      }
+    }
 
-    var headers = appendHeaders(new Headers({
-      'Accept': _mimeType.default.json,
-      'Content-Type': _mimeType.default.json
-    }), options.args.headers); // request options
+    function r(e, r, n) {
+      return r && t(e.prototype, r), n && t(e, n), e;
+    }
 
-    var construct = Object.assign({
-      headers: headers,
-      method: 'POST',
-      body: (0, _utility.stringify)(options.data || {}),
-      credentials: 'include'
-    }, options.args);
-    return fetch(options.url, construct);
-  },
-  put: function put(options
-  /* { method = '', url = '', data = {}, headers = [], ...args } */
-  ) {
-    if (!options.url) throw new TypeError('loader.post => options.url is invalid, null or undefined'); // generate headers (extend if neccessary)
+    Object.defineProperty(exports, "__esModule", {
+      value: !0
+    }), exports.default = void 0;
 
-    var headers = appendHeaders(new Headers({
-      'Accept': _mimeType.default.json,
-      'Content-Type': _mimeType.default.json
-    }), options.args.headers); // request options
+    var n = function () {
+      function t() {
+        var r = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "GET",
+            n = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "#",
+            a = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {},
+            o = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : [];
+        e(this, t), o = o instanceof Array ? o : [o], this.method = r, this.url = n, this.data = a, this.headers = o;
 
-    var construct = Object.assign({
-      headers: headers,
-      method: 'PUT',
-      body: (0, _utility.stringify)(options.data || {}),
-      credentials: 'include'
-    }, options.args);
-    return fetch(options.url, construct);
-  },
-  delete: function _delete(options
-  /* {} */
-  ) {
-    throw new Error('loader.delete => not yet implemented...');
-  },
-  trace: function trace(options
-  /* {} */
-  ) {
-    throw new Error('loader.trace => not yet implemented...');
-  },
-  options: function options(_options
-  /* {} */
-  ) {
-    throw new Error('loader.options => not yet implemented...');
-  },
-  connect: function connect(options
-  /* {} */
-  ) {
-    throw new Error('loader.connect => not yet implemented...');
-  },
-  do: function _do(options
-  /* { method = '', url = '', data = {}, headers = [], ...args } */
-  ) {
-    if (!options) throw new TypeError('loader.do => options is invalid, null or undefined');
-    if (!options.method || requestTypes.indexOf(options.method.toUpperCase()) === -1) throw new TypeError('loader.do => options.method is invalid, null or undefined');
-    if (!options.url) throw new TypeError('loader.do => options.url is invalid, null or undefined'); // execute the xhr request
+        for (var i = arguments.length, s = new Array(i > 4 ? i - 4 : 0), h = 4; h < i; h++) {
+          s[h - 4] = arguments[h];
+        }
 
-    return this[options.method.toLowerCase()](options).then(function (response) {
-      // cast a custom exception to manage invalid status codes from the service calls
-      if (!response.ok) {
-        var message = "response.status: ".concat(response.status, " | url: ").concat(response.url);
-        return _sanitize2.default.core(response).then(function (exc) {
-          throw new _exception2.default.InvalidResponseError(message, exc);
+        this.args = Object.assign.apply(Object, [{}].concat(s));
+      }
+
+      return r(t, [{
+        key: "options",
+        value: function value() {
+          for (var e = arguments.length, t = new Array(e), r = 0; r < e; r++) {
+            t[r] = arguments[r];
+          }
+
+          return Object.assign.apply(Object, [{
+            method: this.method,
+            url: this.url,
+            data: this.data,
+            headers: this.headers
+          }, this.args].concat(t));
+        }
+      }]), t;
+    }(),
+        a = n;
+
+    exports.default = a;
+  }, {}],
+  "qlvM": [function (require, module, exports) {
+    "use strict";
+
+    Object.defineProperty(exports, "__esModule", {
+      value: !0
+    }), exports.default = void 0;
+    var t = {
+      css: "text/css",
+      html: "text/html",
+      script: "text/javascript",
+      json: "application/json",
+      xml: "application/xml",
+      xhtml: "application/xhtml+xml",
+      stream: "application/octet-stream"
+    },
+        e = t;
+    exports.default = e;
+  }, {}],
+  "e7az": [function (require, module, exports) {
+    "use strict";
+
+    Object.defineProperty(exports, "__esModule", {
+      value: !0
+    }), exports.default = void 0;
+    var e = t(require("./mime-type.core"));
+
+    function t(e) {
+      return e && e.__esModule ? e : {
+        default: e
+      };
+    }
+
+    var n = {
+      core: function core(t) {
+        var n = t.headers ? t.headers.get("content-type") : "";
+        if (n.includes(e.default.json)) return t.json();
+        if (n.includes(e.default.html)) return t.text();
+        if (n.includes(e.default.stream)) return t.blob();
+        throw new TypeError("content-type not available");
+      },
+      json: function json(t) {
+        if ((t.headers ? t.headers.get("content-type") : "").includes(e.default.json)) return t.json();
+        throw new TypeError("content-type not available");
+      },
+      html: function html(t) {
+        if ((t.headers ? t.headers.get("content-type") : "").includes(e.default.json)) return t.text();
+        throw new TypeError("content-type not available");
+      },
+      stream: function stream(t) {
+        if ((t.headers ? t.headers.get("content-type") : "").includes(e.default.json)) return t.blob();
+        throw new TypeError("content-type not available");
+      }
+    },
+        r = n;
+    exports.default = r;
+  }, {
+    "./mime-type.core": "qlvM"
+  }],
+  "0its": [function (require, module, exports) {
+    "use strict";
+
+    Object.defineProperty(exports, "__esModule", {
+      value: !0
+    }), exports.default = void 0;
+
+    var e = function e() {
+      var e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "",
+          r = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : null;
+      this.name = "InvalidResponseError", this.message = e, this.exc = r;
+    };
+
+    e.prototype = new Error();
+    var r = {
+      InvalidResponseError: e
+    };
+    exports.default = r;
+  }, {}],
+  "Slwy": [function (require, module, exports) {
+    "use strict";
+
+    function r(e) {
+      return (r = "function" == typeof Symbol && "symbol" == _typeof(Symbol.iterator) ? function (r) {
+        return _typeof(r);
+      } : function (r) {
+        return r && "function" == typeof Symbol && r.constructor === Symbol && r !== Symbol.prototype ? "symbol" : _typeof(r);
+      })(e);
+    }
+
+    Object.defineProperty(exports, "__esModule", {
+      value: !0
+    }), exports.default = exports.replaceStringParams = exports.replaceObjectParams = exports.replacePlaceholderParams = exports.clone = exports.parseJSON = exports.stringify = void 0;
+
+    var e = function e(r) {
+      return JSON.stringify(r);
+    };
+
+    exports.stringify = e;
+
+    var t = function t(r) {
+      return JSON.parse(r);
+    };
+
+    exports.parseJSON = t;
+
+    var n = function n(r) {
+      return t(e(r));
+    };
+
+    exports.clone = n;
+
+    var o = function o(r, e, t) {
+      if (!r) return "";
+      if ("string" != typeof r) throw new TypeError("invalid placeholder or placeholder is not an string", r);
+      if (n && !(n instanceof RegExp)) throw new TypeError("invalid regex: the regex is not a properly formatted regular expression i.e. /{\\d}/g ", n);
+      e = e instanceof Array ? e : [e];
+      var n = /{\d}|{\d,\d}|{\d,\d-\d}/g,
+          o = -1,
+          a = e.length,
+          i = "{".concat(a - 1, "}"),
+          s = "{".concat(a, "}"),
+          l = r.indexOf(i) > -1,
+          c = r.indexOf(s) > -1,
+          p = r.indexOf(i) + i.length;
+      return (r = t ? r.substring(0, l && c ? p : r.length) : r).replace(n, function (r) {
+        var t = r.substring(1, r.length - 1).split(","),
+            n = 1 === t.length ? 0 : t[1].split("-")[0],
+            i = 1 === t.length ? void 0 : t[1].split("-")[1];
+        return ++o < a ? void 0 !== e[o] ? e[o].toString().substring(n, i) : null : r;
+      });
+    };
+
+    exports.replacePlaceholderParams = o;
+
+    var a = function a(n, o) {
+      if (!n) return {};
+      if ("object" !== r(n) && n.constructor === Object) throw new TypeError("invalid model or model is not an object", n);
+      o = o instanceof Array ? o : [o];
+      var a = /{(.*?)}/,
+          i = e(n).replace(/"{\d}"/g, function (r) {
+        var t = r.match(a),
+            n = t.length > 0 ? t[1] : -1;
+        return n > -1 && n < o.length ? e(o[n]) : r;
+      });
+      return t(i);
+    };
+
+    exports.replaceObjectParams = a;
+
+    var i = function i() {
+      var r = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "",
+          e = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {};
+      return r.replace(/{(.*?)}/g, function (r) {
+        return e[r.substring(1, r.length - 1)];
+      });
+    };
+
+    exports.replaceStringParams = i;
+    var s = {
+      stringify: e,
+      parseJSON: t,
+      clone: n,
+      replacePlaceholderParams: o,
+      replaceObjectParams: a,
+      replaceStringParams: i
+    };
+    exports.default = s;
+  }, {}],
+  "gvlF": [function (require, module, exports) {
+    "use strict";
+
+    Object.defineProperty(exports, "__esModule", {
+      value: !0
+    }), exports.default = void 0;
+
+    var e = o(require("./mime-type.core")),
+        t = o(require("./sanitize.core")),
+        n = o(require("./exception.core")),
+        r = require("../common/utility.common");
+
+    function o(e) {
+      return e && e.__esModule ? e : {
+        default: e
+      };
+    }
+
+    function i(e) {
+      return (i = "function" == typeof Symbol && "symbol" == _typeof(Symbol.iterator) ? function (e) {
+        return _typeof(e);
+      } : function (e) {
+        return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : _typeof(e);
+      })(e);
+    }
+
+    var d = ["GET", "HEAD", "POST", "PUT", "DELETE", "TRACE", "OPTIONS", "CONNECT", "PATCH"],
+        a = function a(e) {
+      var t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : [];
+      if (e = e || new Headers(), !t.length) return e;
+
+      for (var n = 0, r = t.length; n < r; n++) {
+        e.append(Object.keys(t[n])[0], Object.values(t[n])[0]);
+      }
+
+      return e;
+    },
+        l = {
+      get: function get(t) {
+        if (!t.url) throw new TypeError("loader.get => options.url is invalid, null or undefined");
+        var n = "";
+        if (t.data && "object" === i(t.data)) for (var r in t.data) {
+          n += "&" + r + "=" + encodeURIComponent(t.data[r]);
+        }
+        n.length > 0 && (n = "?" + n.slice(1));
+        var o = a(new Headers({
+          Accept: e.default.json,
+          "Content-Type": e.default.json
+        }), t.headers),
+            d = Object.assign({
+          method: "GET",
+          credentials: "include",
+          headers: o
+        }, t.args);
+        return fetch(t.url + n, d);
+      },
+      head: function head(e) {
+        throw new Error("loader.head => not yet implemented...");
+      },
+      post: function post(t) {
+        if (!t.url) throw new TypeError("loader.post => options.url is invalid, null or undefined");
+        var n = a(new Headers({
+          Accept: e.default.json,
+          "Content-Type": e.default.json
+        }), t.headers),
+            o = Object.assign({
+          headers: n,
+          method: "POST",
+          body: (0, r.stringify)(t.data || {}),
+          credentials: "include"
+        }, t.args);
+        return fetch(t.url, o);
+      },
+      put: function put(t) {
+        if (!t.url) throw new TypeError("loader.post => options.url is invalid, null or undefined");
+        var n = a(new Headers({
+          Accept: e.default.json,
+          "Content-Type": e.default.json
+        }), t.headers),
+            o = Object.assign({
+          headers: n,
+          method: "PUT",
+          body: (0, r.stringify)(t.data || {}),
+          credentials: "include"
+        }, t.args);
+        return fetch(t.url, o);
+      },
+      delete: function _delete(e) {
+        throw new Error("loader.delete => not yet implemented...");
+      },
+      trace: function trace(e) {
+        throw new Error("loader.trace => not yet implemented...");
+      },
+      options: function options(e) {
+        throw new Error("loader.options => not yet implemented...");
+      },
+      connect: function connect(e) {
+        throw new Error("loader.connect => not yet implemented...");
+      },
+      do: function _do(e) {
+        if (!e) throw new TypeError("loader.do => options is invalid, null or undefined");
+        if (!e.method || -1 === d.indexOf(e.method.toUpperCase())) throw new TypeError("loader.do => options.method is invalid, null or undefined");
+        if (!e.url) throw new TypeError("loader.do => options.url is invalid, null or undefined");
+        return this[e.method.toLowerCase()](e).then(function (e) {
+          if (!e.ok) {
+            var r = "response.status: ".concat(e.status, " | url: ").concat(e.url);
+            return t.default.core(e).then(function (e) {
+              throw new n.default.InvalidResponseError(r, e);
+            });
+          }
+
+          return e.clone();
+        }).catch(function (e) {
+          throw e;
         });
-      } // return response copy
+      },
+      sync: function sync(e) {
+        throw new Error("loader.sync => not yet implemented...");
+      }
+    },
+        u = l;
 
+    exports.default = u;
+  }, {
+    "./mime-type.core": "qlvM",
+    "./sanitize.core": "e7az",
+    "./exception.core": "0its",
+    "../common/utility.common": "Slwy"
+  }],
+  "baCp": [function (require, module, exports) {
+    "use strict";
 
-      return response.clone();
-    }).catch(function (error) {
-      throw error;
+    Object.defineProperty(exports, "__esModule", {
+      value: !0
+    }), exports.default = void 0;
+    var e = t(require("../core/loader.core")),
+        r = t(require("../core/sanitize.core"));
+
+    function t(e) {
+      return e && e.__esModule ? e : {
+        default: e
+      };
+    }
+
+    var o = {
+      call: function call() {
+        var t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : null,
+            o = (arguments.length > 1 && arguments[1], arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : "json");
+        if (!t) throw new TypeError("api.call(endpoint, type) requries a valid endpoint object", t);
+        return e.default.do(t).then(r.default[o]);
+      }
+    },
+        l = o;
+    exports.default = l;
+  }, {
+    "../core/loader.core": "gvlF",
+    "../core/sanitize.core": "e7az"
+  }],
+  "Focm": [function (require, module, exports) {
+    "use strict";
+
+    Object.defineProperty(exports, "__esModule", {
+      value: !0
+    }), Object.defineProperty(exports, "Endpoint", {
+      enumerable: !0,
+      get: function get() {
+        return e.default;
+      }
+    }), Object.defineProperty(exports, "loader", {
+      enumerable: !0,
+      get: function get() {
+        return r.default;
+      }
+    }), Object.defineProperty(exports, "sanitize", {
+      enumerable: !0,
+      get: function get() {
+        return t.default;
+      }
+    }), Object.defineProperty(exports, "mime", {
+      enumerable: !0,
+      get: function get() {
+        return n.default;
+      }
+    }), Object.defineProperty(exports, "api", {
+      enumerable: !0,
+      get: function get() {
+        return o.default;
+      }
     });
-  },
-  sync: function sync(queue) {
-    throw new Error('loader.sync => not yet implemented...');
-  }
-};
-var _default = loader;
-exports.default = _default;
-},{"./mime-type.core":"../src/core/mime-type.core.js","./sanitize.core":"../src/core/sanitize.core.js","./exception.core":"../src/core/exception.core.js","../common/utility.common":"../src/common/utility.common.js"}],"../src/api/global.api.js":[function(require,module,exports) {
-"use strict";
+    var e = u(require("./core/endpoint.core")),
+        r = u(require("./core/loader.core")),
+        t = u(require("./core/sanitize.core")),
+        n = u(require("./core/mime-type.core")),
+        o = u(require("./api/global.api"));
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _loader2 = _interopRequireDefault(require("../core/loader.core"));
-
-var _sanitize2 = _interopRequireDefault(require("../core/sanitize.core"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var api = {
-  call: function call() {
-    var endpoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-    var data = arguments.length > 1 ? arguments[1] : undefined;
-    var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'json';
-    if (!endpoint) throw new TypeError('api.call(endpoint, type) requries a valid endpoint object', endpoint);
-    return _loader2.default.do(endpoint).then(_sanitize2.default[type]);
-  }
-};
-var _default = api;
-exports.default = _default;
-},{"../core/loader.core":"../src/core/loader.core.js","../core/sanitize.core":"../src/core/sanitize.core.js"}],"../src/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, "Endpoint", {
-  enumerable: true,
-  get: function () {
-    return _endpoint.default;
-  }
-});
-Object.defineProperty(exports, "loader", {
-  enumerable: true,
-  get: function () {
-    return _loader.default;
-  }
-});
-Object.defineProperty(exports, "sanitize", {
-  enumerable: true,
-  get: function () {
-    return _sanitize.default;
-  }
-});
-Object.defineProperty(exports, "mime", {
-  enumerable: true,
-  get: function () {
-    return _mimeType.default;
-  }
-});
-Object.defineProperty(exports, "api", {
-  enumerable: true,
-  get: function () {
-    return _global.default;
-  }
-});
-
-var _endpoint = _interopRequireDefault(require("./core/endpoint.core"));
-
-var _loader = _interopRequireDefault(require("./core/loader.core"));
-
-var _sanitize = _interopRequireDefault(require("./core/sanitize.core"));
-
-var _mimeType = _interopRequireDefault(require("./core/mime-type.core"));
-
-var _global = _interopRequireDefault(require("./api/global.api"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./core/endpoint.core":"../src/core/endpoint.core.js","./core/loader.core":"../src/core/loader.core.js","./core/sanitize.core":"../src/core/sanitize.core.js","./core/mime-type.core":"../src/core/mime-type.core.js","./api/global.api":"../src/api/global.api.js"}],"index.debug.js":[function(require,module,exports) {
-"use strict";
-
-var _src = require("../src");
-
-var endpoint = new _src.Endpoint('get', 'https://reqres.in/api/users?page=2', null, {
-  credentials: 'omit'
-}, {
-  headers: [{
-    'Content-type': 'no-cache'
+    function u(e) {
+      return e && e.__esModule ? e : {
+        default: e
+      };
+    }
+  }, {
+    "./core/endpoint.core": "0pG5",
+    "./core/loader.core": "gvlF",
+    "./core/sanitize.core": "e7az",
+    "./core/mime-type.core": "qlvM",
+    "./api/global.api": "baCp"
   }]
-});
-console.log(endpoint);
+}, {}, ["Focm"], null);
+},{}],"index.debug.js":[function(require,module,exports) {
+"use strict";
 
-_src.api.call(endpoint).then(function (data) {
-  return console.log(data);
-});
+var _dist = require("../dist");
 
-_src.loader.do(endpoint).then(_src.sanitize.json).then(function (data) {
-  return console.log(data);
+// create an endpoint
+var endpoint = new _dist.Endpoint('get', 'https://reqres.in/api/users?page=2', null, {
+  'cache-control': 5000
+}, {
+  credentials: 'omit'
 });
-},{"../src":"../src/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+console.log(endpoint); // call the root loader and sanitize the repsonse data
+
+_dist.loader.do(endpoint).then(_dist.sanitize.json).then(function (data) {
+  return console.log(data);
+}); // you can also call the wrapper function for loader as a shorthand
+//api.call(endpoint).then(data => console.log(data));
+},{"../dist":"../dist/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -631,7 +634,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "8792" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "20939" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
