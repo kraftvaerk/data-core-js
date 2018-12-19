@@ -4,7 +4,7 @@
   "description": "endpoint fetch request http ajax",
   "main": "dist/index.js",
   "scripts": {
-    "sample": "parcel samples/index.html --https",
+    "watch": "parcel samples/index.html --https",
     "build": "parcel build src/index.js --out-dir dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
