@@ -27,15 +27,17 @@ const loader = {
         if (query.length > 0) query = '?' + query.slice(1);
 
         // generate options and headers (extend if neccessary)
+        console.log(options.args.headers);
         const headers = appendHeaders(
             new Headers({ 'Accept': _mime.json, 'Content-Type': _mime.json }), 
-            options.headers
+            options.args.headers
         );
+        console.log(headers);
         const fetchOptions = Object.assign({
             method: 'GET',
             credentials: 'include',
             headers
-        }, ...options.args);
+        }, options.args);
         return fetch((options.url + query), fetchOptions);
     },
 
@@ -49,7 +51,7 @@ const loader = {
         // generate headers (extend if neccessary)
         const headers = appendHeaders(
             new Headers({ 'Accept': _mime.json, 'Content-Type': _mime.json }), 
-            options.headers
+            options.args.headers
         );
 
         // request options
@@ -58,7 +60,7 @@ const loader = {
             method: 'POST',
             body: _stringify(options.data || {}),
             credentials: 'include'
-        }, ...options.args);
+        }, options.args);
 
         return fetch(options.url, construct);
     },
@@ -69,7 +71,7 @@ const loader = {
         // generate headers (extend if neccessary)
         const headers = appendHeaders(
             new Headers({ 'Accept': _mime.json, 'Content-Type': _mime.json }),
-            options.headers
+            options.args.headers
         );
 
         // request options
@@ -78,7 +80,7 @@ const loader = {
             method: 'PUT',
             body: _stringify(options.data || {}),
             credentials: 'include'
-        }, ...options.args);
+        }, options.args);
 
         return fetch(options.url, construct);
     },
@@ -101,7 +103,7 @@ const loader = {
 
     do (options /* { method = '', url = '', data = {}, headers = [], ...args } */) {
         if (!options) throw new TypeError('loader.do => options is invalid, null or undefined');
-        if (!options.method || (requestTypes.indexOf(options.method.toLowerCase()) === -1)) throw new TypeError('loader.do => options.method is invalid, null or undefined');
+        if (!options.method || (requestTypes.indexOf(options.method.toUpperCase()) === -1)) throw new TypeError('loader.do => options.method is invalid, null or undefined');
         if (!options.url) throw new TypeError('loader.do => options.url is invalid, null or undefined');
       
         // execute the xhr request

@@ -9,6 +9,10 @@
 		* .post (options = {})
 		* .put (options = {})
 		* .do (options = {})
+  
+* sanitize
+  
+* mime
 
 #	api (generic api caller)
 

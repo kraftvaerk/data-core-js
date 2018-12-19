@@ -1,11 +1,5 @@
-import Endpoint from './core/endpoint.core';
-import loader from './core/loader.core';
-import api from './api/global.api';
-
-
-
-export default { 
-	Endpoint, 
-	loader, 
-	api
-};
+export { default as Endpoint } from './core/endpoint.core';
+export { default as loader } from './core/loader.core';
+export { default as sanitize } from './core/sanitize.core';
+export { default as mime } from './core/mime-type.core';
+export { default as api } from './api/global.api';

@@ -170,33 +170,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-require("core-js/modules/es6.string.iterator");
-
-require("core-js/modules/es6.array.from");
-
-require("core-js/modules/es6.regexp.to-string");
-
-require("core-js/modules/es6.date.to-string");
-
-require("core-js/modules/es7.symbol.async-iterator");
-
-require("core-js/modules/es6.symbol");
-
-require("core-js/modules/web.dom.iterable");
-
-require("core-js/modules/es6.array.is-array");
-
 require("core-js/modules/es6.object.define-property");
 
 require("core-js/modules/es6.object.assign");
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -240,7 +216,7 @@ function () {
         url: this.url,
         data: this.data,
         headers: this.headers
-      }].concat(_toConsumableArray(this.args), additionalArgs));
+      }, this.args].concat(additionalArgs));
     }
   }]);
 
@@ -340,16 +316,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-require("core-js/modules/es6.string.iterator");
-
-require("core-js/modules/es6.array.from");
-
-require("core-js/modules/es6.regexp.to-string");
-
-require("core-js/modules/es6.date.to-string");
-
-require("core-js/modules/es6.array.is-array");
-
 require("core-js/modules/es7.symbol.async-iterator");
 
 require("core-js/modules/es6.symbol");
@@ -375,14 +341,6 @@ var _exception2 = _interopRequireDefault(require("./exception.core"));
 var _utility = require("../common/utility.common");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -419,11 +377,11 @@ var loader = {
       'Accept': _mimeType.default.json,
       'Content-Type': _mimeType.default.json
     }), options.headers);
-    var fetchOptions = Object.assign.apply(Object, [{
+    var fetchOptions = Object.assign({
       method: 'GET',
       credentials: 'include',
       headers: headers
-    }].concat(_toConsumableArray(options.args)));
+    }, options.args);
     return fetch(options.url + query, fetchOptions);
   },
   head: function head(options
@@ -441,12 +399,12 @@ var loader = {
       'Content-Type': _mimeType.default.json
     }), options.headers); // request options
 
-    var construct = Object.assign.apply(Object, [{
+    var construct = Object.assign({
       headers: headers,
       method: 'POST',
       body: (0, _utility.stringify)(options.data || {}),
       credentials: 'include'
-    }].concat(_toConsumableArray(options.args)));
+    }, options.args);
     return fetch(options.url, construct);
   },
   put: function put(options
@@ -459,12 +417,12 @@ var loader = {
       'Content-Type': _mimeType.default.json
     }), options.headers); // request options
 
-    var construct = Object.assign.apply(Object, [{
+    var construct = Object.assign({
       headers: headers,
       method: 'PUT',
       body: (0, _utility.stringify)(options.data || {}),
       credentials: 'include'
-    }].concat(_toConsumableArray(options.args)));
+    }, options.args);
     return fetch(options.url, construct);
   },
   delete: function _delete(options
@@ -491,7 +449,7 @@ var loader = {
   /* { method = '', url = '', data = {}, headers = [], ...args } */
   ) {
     if (!options) throw new TypeError('loader.do => options is invalid, null or undefined');
-    if (!options.method || requestTypes.indexOf(options.method.toLowerCase()) === -1) throw new TypeError('loader.do => options.method is invalid, null or undefined');
+    if (!options.method || requestTypes.indexOf(options.method.toUpperCase()) === -1) throw new TypeError('loader.do => options.method is invalid, null or undefined');
     if (!options.url) throw new TypeError('loader.do => options.url is invalid, null or undefined'); // execute the xhr request
 
     return this[options.method.toLowerCase()](options).then(function (response) {
@@ -584,7 +542,24 @@ require("core-js/modules/es6.object.define-property");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+Object.defineProperty(exports, "Endpoint", {
+  enumerable: true,
+  get: function get() {
+    return _endpoint.default;
+  }
+});
+Object.defineProperty(exports, "loader", {
+  enumerable: true,
+  get: function get() {
+    return _loader.default;
+  }
+});
+Object.defineProperty(exports, "api", {
+  enumerable: true,
+  get: function get() {
+    return _global.default;
+  }
+});
 
 var _endpoint = _interopRequireDefault(require("./core/endpoint.core"));
 
@@ -593,13 +568,6 @@ var _loader = _interopRequireDefault(require("./core/loader.core"));
 var _global = _interopRequireDefault(require("./api/global.api"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _default = {
-  Endpoint: _endpoint.default,
-  loader: _loader.default,
-  api: _global.default
-};
-exports.default = _default;
 "use strict";
 
 require("core-js/modules/es6.object.define-property");
@@ -937,33 +905,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-require("core-js/modules/es6.string.iterator");
-
-require("core-js/modules/es6.array.from");
-
-require("core-js/modules/es6.regexp.to-string");
-
-require("core-js/modules/es6.date.to-string");
-
-require("core-js/modules/es7.symbol.async-iterator");
-
-require("core-js/modules/es6.symbol");
-
-require("core-js/modules/web.dom.iterable");
-
-require("core-js/modules/es6.array.is-array");
-
 require("core-js/modules/es6.object.define-property");
 
 require("core-js/modules/es6.object.assign");
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1007,7 +951,7 @@ function () {
         url: this.url,
         data: this.data,
         headers: this.headers
-      }].concat(_toConsumableArray(this.args), additionalArgs));
+      }, this.args].concat(additionalArgs));
     }
   }]);
 
@@ -1107,16 +1051,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-require("core-js/modules/es6.string.iterator");
-
-require("core-js/modules/es6.array.from");
-
-require("core-js/modules/es6.regexp.to-string");
-
-require("core-js/modules/es6.date.to-string");
-
-require("core-js/modules/es6.array.is-array");
-
 require("core-js/modules/es7.symbol.async-iterator");
 
 require("core-js/modules/es6.symbol");
@@ -1142,14 +1076,6 @@ var _exception2 = _interopRequireDefault(require("./exception.core"));
 var _utility = require("../common/utility.common");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -1186,11 +1112,11 @@ var loader = {
       'Accept': _mimeType.default.json,
       'Content-Type': _mimeType.default.json
     }), options.headers);
-    var fetchOptions = Object.assign.apply(Object, [{
+    var fetchOptions = Object.assign({
       method: 'GET',
       credentials: 'include',
       headers: headers
-    }].concat(_toConsumableArray(options.args)));
+    }, options.args);
     return fetch(options.url + query, fetchOptions);
   },
   head: function head(options
@@ -1208,12 +1134,12 @@ var loader = {
       'Content-Type': _mimeType.default.json
     }), options.headers); // request options
 
-    var construct = Object.assign.apply(Object, [{
+    var construct = Object.assign({
       headers: headers,
       method: 'POST',
       body: (0, _utility.stringify)(options.data || {}),
       credentials: 'include'
-    }].concat(_toConsumableArray(options.args)));
+    }, options.args);
     return fetch(options.url, construct);
   },
   put: function put(options
@@ -1226,12 +1152,12 @@ var loader = {
       'Content-Type': _mimeType.default.json
     }), options.headers); // request options
 
-    var construct = Object.assign.apply(Object, [{
+    var construct = Object.assign({
       headers: headers,
       method: 'PUT',
       body: (0, _utility.stringify)(options.data || {}),
       credentials: 'include'
-    }].concat(_toConsumableArray(options.args)));
+    }, options.args);
     return fetch(options.url, construct);
   },
   delete: function _delete(options
@@ -1258,7 +1184,7 @@ var loader = {
   /* { method = '', url = '', data = {}, headers = [], ...args } */
   ) {
     if (!options) throw new TypeError('loader.do => options is invalid, null or undefined');
-    if (!options.method || requestTypes.indexOf(options.method.toLowerCase()) === -1) throw new TypeError('loader.do => options.method is invalid, null or undefined');
+    if (!options.method || requestTypes.indexOf(options.method.toUpperCase()) === -1) throw new TypeError('loader.do => options.method is invalid, null or undefined');
     if (!options.url) throw new TypeError('loader.do => options.url is invalid, null or undefined'); // execute the xhr request
 
     return this[options.method.toLowerCase()](options).then(function (response) {
@@ -1351,33 +1277,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-require("core-js/modules/es6.string.iterator");
-
-require("core-js/modules/es6.array.from");
-
-require("core-js/modules/es6.regexp.to-string");
-
-require("core-js/modules/es6.date.to-string");
-
-require("core-js/modules/es7.symbol.async-iterator");
-
-require("core-js/modules/es6.symbol");
-
-require("core-js/modules/web.dom.iterable");
-
-require("core-js/modules/es6.array.is-array");
-
 require("core-js/modules/es6.object.define-property");
 
 require("core-js/modules/es6.object.assign");
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1421,7 +1323,7 @@ function () {
         url: this.url,
         data: this.data,
         headers: this.headers
-      }].concat(_toConsumableArray(this.args), additionalArgs));
+      }, this.args].concat(additionalArgs));
     }
   }]);
 
@@ -1521,16 +1423,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-require("core-js/modules/es6.string.iterator");
-
-require("core-js/modules/es6.array.from");
-
-require("core-js/modules/es6.regexp.to-string");
-
-require("core-js/modules/es6.date.to-string");
-
-require("core-js/modules/es6.array.is-array");
-
 require("core-js/modules/es7.symbol.async-iterator");
 
 require("core-js/modules/es6.symbol");
@@ -1556,14 +1448,6 @@ var _exception2 = _interopRequireDefault(require("./exception.core"));
 var _utility = require("../common/utility.common");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -1600,11 +1484,11 @@ var loader = {
       'Accept': _mimeType.default.json,
       'Content-Type': _mimeType.default.json
     }), options.headers);
-    var fetchOptions = Object.assign.apply(Object, [{
+    var fetchOptions = Object.assign({
       method: 'GET',
       credentials: 'include',
       headers: headers
-    }].concat(_toConsumableArray(options.args)));
+    }, options.args);
     return fetch(options.url + query, fetchOptions);
   },
   head: function head(options
@@ -1622,12 +1506,12 @@ var loader = {
       'Content-Type': _mimeType.default.json
     }), options.headers); // request options
 
-    var construct = Object.assign.apply(Object, [{
+    var construct = Object.assign({
       headers: headers,
       method: 'POST',
       body: (0, _utility.stringify)(options.data || {}),
       credentials: 'include'
-    }].concat(_toConsumableArray(options.args)));
+    }, options.args);
     return fetch(options.url, construct);
   },
   put: function put(options
@@ -1640,12 +1524,12 @@ var loader = {
       'Content-Type': _mimeType.default.json
     }), options.headers); // request options
 
-    var construct = Object.assign.apply(Object, [{
+    var construct = Object.assign({
       headers: headers,
       method: 'PUT',
       body: (0, _utility.stringify)(options.data || {}),
       credentials: 'include'
-    }].concat(_toConsumableArray(options.args)));
+    }, options.args);
     return fetch(options.url, construct);
   },
   delete: function _delete(options
@@ -1672,7 +1556,7 @@ var loader = {
   /* { method = '', url = '', data = {}, headers = [], ...args } */
   ) {
     if (!options) throw new TypeError('loader.do => options is invalid, null or undefined');
-    if (!options.method || requestTypes.indexOf(options.method.toLowerCase()) === -1) throw new TypeError('loader.do => options.method is invalid, null or undefined');
+    if (!options.method || requestTypes.indexOf(options.method.toUpperCase()) === -1) throw new TypeError('loader.do => options.method is invalid, null or undefined');
     if (!options.url) throw new TypeError('loader.do => options.url is invalid, null or undefined'); // execute the xhr request
 
     return this[options.method.toLowerCase()](options).then(function (response) {
@@ -1765,7 +1649,24 @@ require("core-js/modules/es6.object.define-property");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+Object.defineProperty(exports, "Endpoint", {
+  enumerable: true,
+  get: function get() {
+    return _endpoint.default;
+  }
+});
+Object.defineProperty(exports, "loader", {
+  enumerable: true,
+  get: function get() {
+    return _loader.default;
+  }
+});
+Object.defineProperty(exports, "api", {
+  enumerable: true,
+  get: function get() {
+    return _global.default;
+  }
+});
 
 var _endpoint = _interopRequireDefault(require("./core/endpoint.core"));
 
@@ -1774,10 +1675,3 @@ var _loader = _interopRequireDefault(require("./core/loader.core"));
 var _global = _interopRequireDefault(require("./api/global.api"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _default = {
-  Endpoint: _endpoint.default,
-  loader: _loader.default,
-  api: _global.default
-};
-exports.default = _default;

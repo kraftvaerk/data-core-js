@@ -4,7 +4,8 @@
   "description": "endpoint fetch request http ajax",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel src --out-file dist/index.js",
+    "sample": "parcel samples/index.html --https",
+    "build": "babel src/** --out-file dist/index.js && npm run sample",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,6 +27,7 @@
     "@babel/plugin-proposal-object-rest-spread": "latest",
     "@babel/plugin-syntax-dynamic-import": "latest",
     "@babel/plugin-transform-modules-commonjs": "latest",
-    "@babel/preset-env": "latest"
+    "@babel/preset-env": "latest",
+    "parcel-bundler": "^1.11.0"
   }
 }
