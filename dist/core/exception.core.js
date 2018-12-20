@@ -1,0 +1,2 @@
+'use strict';Object.defineProperty(exports,'__esModule',{value:!0});// invalid response error
+var InvalidResponseError=function(){var a=0<arguments.length&&arguments[0]!==void 0?arguments[0]:'',b=1<arguments.length&&arguments[1]!==void 0?arguments[1]:null;this.name='InvalidResponseError',this.message=a,this.exc=b};InvalidResponseError.prototype=new Error,exports.default={InvalidResponseError:InvalidResponseError},module.exports=exports.default;

@@ -11,12 +11,14 @@
 		* .do (options = {})
   
 * sanitize
+	- response parser (extracts the actual data from the server response)
   
 * mime
+   - utility object containing various mime types (more to come)
 
 #	api (generic api caller)
 
-	* call: (endpoint = null, type = 'json') 
+	* call: (endpoint = null, data = {}, type = 'json')
 
 
 #	sample usage
