@@ -7,6 +7,7 @@ const api = {
 
     call: (endpoint = null, data, type = 'json') => {
         if(!endpoint) throw new TypeError('api.call(endpoint, type) requries a valid endpoint object', endpoint);
+        if(data) endpoint.data = data;
         return _loader.do(endpoint).then(_sanitize[type]);
     }
 
