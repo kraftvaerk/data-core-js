@@ -2,6 +2,7 @@
 const mime = {
 
     css:    'text/css',
+    text:   'text/html',
     html:   'text/html',
     script: 'text/javascript',
 
