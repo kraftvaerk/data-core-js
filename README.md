@@ -22,7 +22,7 @@
 
 
 #	sample usage
-  	>> my-api-file.js
-			getResources(endpoint = { method: 'get', url: 'api/get/user/123', data: { x: 'y' } }) {
-				return loader.do(endpoint).then(santize.json);
-			}
+  	
+	getResources(endpoint = { method: 'get', url: 'api/get/user/123', data: { x: 'y' } }) {
+		return loader.do(endpoint).then(santize.json);
+	}
